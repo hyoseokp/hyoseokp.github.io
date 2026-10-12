@@ -50,6 +50,7 @@ p{margin:0; max-width:68ch}
 .themes{display:grid; grid-template-columns:1fr 1fr; gap:22px 32px}
 .themes div{display:grid; gap:6px; align-content:start}
 .themes p{color:var(--muted); font-size:.98rem}
+.themes .wide{grid-column:1 / -1}
 .project{display:grid; grid-template-columns:1fr 1.1fr; gap:28px; align-items:center; background:var(--panel); border:1px solid var(--rule); border-radius:12px; padding:22px}
 .project img{border-radius:8px; border:1px solid var(--rule)}
 .project .body{display:grid; gap:10px}
@@ -92,6 +93,7 @@ footer{color:var(--muted); font-size:.88rem; border-top:1px solid var(--rule); p
     <section id="about">
       <h2>About</h2>
       <p class="lead">I design optical devices that are judged by what a downstream system can do with the light: an image sensor, a neural network or a display. My work combines metasurface inverse design, information-based objectives and GPU full-wave simulation.</p>
+      <p>More broadly, I work in computational physics: I write GPU solvers and differentiable simulations for problems in and beyond optics, from Maxwell's equations to shallow-water flood modelling.</p>
       <p>I work with Prof. Yeonsang Park in the Department of Physics at Chungnam National University.</p>
     </section>
 
@@ -102,6 +104,7 @@ footer{color:var(--muted); font-size:.88rem; border-top:1px solid var(--rule); p
         <div><h3>Information-optimized metalenses</h3><p>Color metalenses for cameras whose design objective is the information the sensor receives about the scene, not a single focal spot.</p></div>
         <div><h3>GPU full-wave inverse design</h3><p>Differentiable FDTD with discrete adjoints and host-streamed execution, used to design freeform metasurfaces at full aperture.</p></div>
         <div><h3>Photonic computing</h3><p>Thin-film lithium niobate microring cascades that approximate the exponential for softmax, and photonic block selection for long-context language-model inference.</p></div>
+        <div class="wide"><h3>Computational physics</h3><p>GPU numerical methods beyond a single application: finite-difference time-domain electromagnetics, discrete adjoints for gradient-based design, and a GPU shallow-water solver used to reconstruct the 2026 Bhote Koshi–Trishuli flood in Nepal.</p></div>
       </div>
     </section>
 
