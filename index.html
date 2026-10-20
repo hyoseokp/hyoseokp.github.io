@@ -240,9 +240,9 @@ footer{color:var(--muted); font-size:.88rem; border-top:1px solid var(--rule); p
     ctx.imageSmoothingEnabled = true;
     ctx.drawImage(off, 0, 0, canvas.width, canvas.height);
   }
-  var t = 0;
-  function loop() { t -= 0.08; frame(t); requestAnimationFrame(loop); }
-  if (still) frame(0); else loop();
+  // Re(A e^{-i omega t}) with omega > 0 moves the wavefronts away from the lens; the phase follows the clock, not the frame rate.
+  function loop(ms) { frame(1.6 * ms / 1000); requestAnimationFrame(loop); }
+  if (still) frame(0); else requestAnimationFrame(loop);
 })();
 </script>
 </body>
