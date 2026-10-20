@@ -64,10 +64,21 @@ p{margin:0; max-width:68ch}
 .tag{display:inline-block; font:400 .72rem/1 var(--mono); padding:4px 7px; border-radius:4px; background:var(--tag); color:var(--muted); margin-left:6px; vertical-align:2px}
 .tag.journal{background:var(--accent-soft); color:var(--accent)}
 footer{color:var(--muted); font-size:.88rem; border-top:1px solid var(--rule); padding-top:18px}
+.field{margin:0; display:grid; gap:8px}
+.field canvas{width:100%; height:auto; aspect-ratio:2.4/1; display:block; border-radius:12px; border:1px solid var(--rule); background:var(--panel)}
+.field figcaption{font-size:.85rem; color:var(--muted); max-width:none}
+.eq{font:400 .82rem/1.4 var(--mono); color:var(--accent); letter-spacing:.01em}
+.maxwell{display:grid; gap:2px; padding:12px 14px; border-left:2px solid var(--accent-soft); font:400 .8rem/1.55 var(--mono); color:var(--muted)}
+.maxwell i{font-style:italic}
+.gallery{display:grid; grid-template-columns:1fr 1fr; gap:20px}
+.gallery figure{margin:0; display:grid; gap:8px; align-content:start}
+.gallery img{border-radius:8px; border:1px solid var(--rule); background:#fff}
+.gallery figcaption{font-size:.88rem; color:var(--muted)}
+.gallery .wide{grid-column:1 / -1}
 @media (max-width: 880px){
   .page{grid-template-columns:1fr; gap:36px; padding-block:32px 48px}
   aside{position:static}
-  .themes,.project{grid-template-columns:1fr}
+  .themes,.project,.gallery{grid-template-columns:1fr}
 }
 @media (max-width: 440px){ .pubs li{grid-template-columns:1fr; gap:2px} }
 </style>
@@ -87,9 +98,20 @@ footer{color:var(--muted); font-size:.88rem; border-top:1px solid var(--rule); p
       <li><a href="https://github.com/hyoseokp">GitHub</a></li>
       <li><a href="https://hyoseokp.github.io/TorchFDTD/">TorchFDTD</a></li>
     </ul>
+    <div class="maxwell" aria-label="Maxwell's equations">
+      <span>∇ · <b>D</b> = <i>ρ</i></span>
+      <span>∇ · <b>B</b> = 0</span>
+      <span>∇ × <b>E</b> = −∂<b>B</b>/∂<i>t</i></span>
+      <span>∇ × <b>H</b> = <b>J</b> + ∂<b>D</b>/∂<i>t</i></span>
+    </div>
   </aside>
 
   <main>
+    <figure class="field">
+      <canvas id="wave" width="960" height="400" aria-label="Animated electric field of a flat lens focusing light"></canvas>
+      <figcaption>A flat lens focusing light, computed live in your browser: forty Huygens sources with a hyperbolic phase profile, summed as cylindrical waves <span class="eq">E(r,t) = Re Σₙ e^{i(k|r−rₙ|+φₙ−ωt)} / √|r−rₙ|</span>.</figcaption>
+    </figure>
+
     <section id="about">
       <h2>About</h2>
       <p class="lead">I design optical devices that are judged by what a downstream system can do with the light: an image sensor, a neural network or a display. My work combines metasurface inverse design, information-based objectives and GPU full-wave simulation.</p>
@@ -100,11 +122,11 @@ footer{color:var(--muted); font-size:.88rem; border-top:1px solid var(--rule); p
     <section id="research">
       <h2>Research</h2>
       <div class="themes">
-        <div><h3>Metasurface color routers</h3><p>Pixel-scale routers that sort light by color onto image-sensor pixels, optimized for imaging information and inverse-designed with deep-learning-accelerated search.</p></div>
-        <div><h3>Information-optimized metalenses</h3><p>Color metalenses for cameras whose design objective is the information the sensor receives about the scene, not a single focal spot.</p></div>
-        <div><h3>GPU full-wave inverse design</h3><p>Differentiable FDTD with discrete adjoints and host-streamed execution, used to design freeform metasurfaces at full aperture.</p></div>
-        <div><h3>Photonic computing</h3><p>Thin-film lithium niobate microring cascades that approximate the exponential for softmax, and photonic block selection for long-context language-model inference.</p></div>
-        <div class="wide"><h3>Computational physics</h3><p>GPU numerical methods beyond a single application: finite-difference time-domain electromagnetics, discrete adjoints for gradient-based design, and a GPU shallow-water solver used to reconstruct the 2026 Bhote Koshi–Trishuli flood in Nepal.</p></div>
+        <div><span class="eq">λ-sorted light → R, G, B pixels</span><h3>Metasurface color routers</h3><p>Pixel-scale routers that sort light by color onto image-sensor pixels, optimized for imaging information and inverse-designed with deep-learning-accelerated search.</p></div>
+        <div><span class="eq">max I(scene; sensor)</span><h3>Information-optimized metalenses</h3><p>Color metalenses for cameras whose design objective is the information the sensor receives about the scene, not a single focal spot.</p></div>
+        <div><span class="eq">∂J/∂ε ∝ Re(E · E<sub>adj</sub>)</span><h3>GPU full-wave inverse design</h3><p>Differentiable FDTD with discrete adjoints and host-streamed execution, used to design freeform metasurfaces at full aperture.</p></div>
+        <div><span class="eq">softmax(x)ᵢ = eˣⁱ / Σⱼ eˣʲ</span><h3>Photonic computing</h3><p>Thin-film lithium niobate microring cascades that approximate the exponential for softmax, and photonic block selection for long-context language-model inference.</p></div>
+        <div class="wide"><span class="eq">∂h/∂t + ∇ · (h<b>u</b>) = 0</span><h3>Computational physics</h3><p>GPU numerical methods beyond a single application: finite-difference time-domain electromagnetics, discrete adjoints for gradient-based design, and a GPU shallow-water solver used to reconstruct the 2026 Bhote Koshi–Trishuli flood in Nepal.</p></div>
       </div>
     </section>
 
@@ -117,6 +139,24 @@ footer{color:var(--muted); font-size:.88rem; border-top:1px solid var(--rule); p
           <p><a href="https://hyoseokp.github.io/TorchFDTD/">Project page</a> · <a href="https://github.com/hyoseokp/TorchFDTD">GitHub</a> · <a href="https://arxiv.org/abs/2609.30039">arXiv:2609.30039</a></p>
         </div>
         <img src="assets/metalens-volume-poster.png" alt="Electric-field wavefronts focusing above a pillar metalens, computed with TorchFDTD">
+      </div>
+    </section>
+
+    <section id="figures">
+      <h2>Selected results</h2>
+      <div class="gallery">
+        <figure class="wide">
+          <img src="assets/paper-e1-lens.png" alt="Optimization history, freeform dielectric layout and nine-wavelength focal fields of a 200 micrometre metalens" loading="lazy">
+          <figcaption>A 200 µm freeform metalens that brings nine wavelengths from 420 to 670 nm to one focus, designed with full-wave 3D adjoints (arXiv:2609.30039, Fig. 3).</figcaption>
+        </figure>
+        <figure>
+          <img src="assets/paper-e2-e3-holograms.png" alt="Color hologram and polarization-switched hologram with targets, layouts and reconstructed images" loading="lazy">
+          <figcaption>A three-color hologram and a hologram that shows "CNU" or "PHY" depending on input polarization (arXiv:2609.30039, Fig. 4).</figcaption>
+        </figure>
+        <figure>
+          <img src="assets/adjoint-inverse-design.png" alt="Wavelength splitter routing 1.31 micrometre light up and 1.55 micrometre light down" loading="lazy">
+          <figcaption>An adjoint-designed wavelength splitter: 97.5% of 1.31 µm light goes up, 93.2% of 1.55 µm light goes down.</figcaption>
+        </figure>
       </div>
     </section>
 
@@ -161,6 +201,57 @@ footer{color:var(--muted); font-size:.88rem; border-top:1px solid var(--rule); p
     <footer>Publication list follows <a href="https://scholar.google.com/citations?user=zQg7LuwAAAAJ">Google Scholar</a> as of October 2026.</footer>
   </main>
 </div>
-
+<script>
+(function () {
+  // Huygens sum of cylindrical waves from a line of sources with a hyperbolic (focusing) phase.
+  // The complex amplitude of every pixel is computed once; each frame only rotates its phase.
+  var canvas = document.getElementById('wave');
+  if (!canvas || !canvas.getContext) return;
+  var W = 240, H = 100, ctx = canvas.getContext('2d');
+  var img = ctx.createImageData(W, H);
+  var off = document.createElement('canvas'); off.width = W; off.height = H;
+  var octx = off.getContext('2d');
+  var lam = 7, k = 2 * Math.PI / lam, f = 110, x0 = 24, N = 40, aperture = 94;
+  var re = new Float32Array(W * H), im = new Float32Array(W * H), peak = 0;
+  for (var j = 0; j < H; j++) for (var i = 0; i < W; i++) {
+    var ar = 0, ai = 0;
+    if (i > x0) for (var n = 0; n < N; n++) {
+      var yn = H / 2 + (n - (N - 1) / 2) * aperture / (N - 1);
+      var phi = -k * (Math.sqrt((yn - H / 2) * (yn - H / 2) + f * f) - f);
+      var dx = i - x0, dy = j - yn, r = Math.sqrt(dx * dx + dy * dy) + 1e-3;
+      var a = 1 / Math.sqrt(r), p = k * r + phi;
+      ar += a * Math.cos(p); ai += a * Math.sin(p);
+    }
+    re[j * W + i] = ar; im[j * W + i] = ai;
+    var m = Math.hypot(ar, ai); if (Math.abs(i - x0 - f) < 6 && m > peak) peak = m;
+  }
+  function color(name) { return getComputedStyle(document.documentElement).getPropertyValue(name).trim(); }
+  function rgb(hex) { var h = hex.replace('#', ''); return [parseInt(h.slice(0, 2), 16), parseInt(h.slice(2, 4), 16), parseInt(h.slice(4, 6), 16)]; }
+  var pos, neg, bg;
+  function palette() {
+    var dark = rgb(color('--ground')).reduce(function (s, v) { return s + v; }, 0) < 300;
+    pos = dark ? [255, 140, 110] : [200, 60, 45]; neg = dark ? [120, 160, 255] : [40, 80, 190]; bg = rgb(color('--panel'));
+  }
+  palette();
+  if (window.matchMedia) window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', palette);
+  var still = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  function frame(t) {
+    var c = Math.cos(t), s = Math.sin(t), d = img.data;
+    for (var p = 0; p < W * H; p++) {
+      var v = (re[p] * c + im[p] * s) / (0.7 * peak);
+      v = Math.max(-1, Math.min(1, v));
+      var col = v >= 0 ? pos : neg, w = Math.abs(v), q = p * 4;
+      d[q] = bg[0] + (col[0] - bg[0]) * w; d[q + 1] = bg[1] + (col[1] - bg[1]) * w; d[q + 2] = bg[2] + (col[2] - bg[2]) * w; d[q + 3] = 255;
+    }
+    for (var j = 0; j < H; j++) { var q = (j * W + x0) * 4; if (Math.abs(j - H / 2) <= aperture / 2) { d[q] = d[q + 1] = d[q + 2] = 90; } }
+    octx.putImageData(img, 0, 0);
+    ctx.imageSmoothingEnabled = true;
+    ctx.drawImage(off, 0, 0, canvas.width, canvas.height);
+  }
+  var t = 0;
+  function loop() { t -= 0.08; frame(t); requestAnimationFrame(loop); }
+  if (still) frame(0); else loop();
+})();
+</script>
 </body>
 </html>
